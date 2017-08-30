@@ -5,3 +5,4 @@ beego lab
 |---|---|
 |lab001|beego安装，和bee工具的简单实用|
 |lab002|bee工具的使用|
+|lab003|运行入门程序|
