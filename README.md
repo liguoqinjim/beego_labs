@@ -11,3 +11,4 @@ https://beego.me/docs/intro/upgrade.md
 |lab006|路由设置|
 |lab007|获取参数|
 |lab008|session|
+|lab009|过滤器|
