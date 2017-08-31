@@ -1,5 +1,5 @@
 # beego_labs
-beego lab
+https://beego.me/docs/intro/upgrade.md
 
 |名称|简介|
 |---|---|
@@ -9,3 +9,4 @@ beego lab
 |lab004|简单修改lab003，添加一些功能|
 |lab005|参数配置|
 |lab006|路由设置|
+|lab007|获取参数|
