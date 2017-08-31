@@ -10,3 +10,4 @@ https://beego.me/docs/intro/upgrade.md
 |lab005|参数配置|
 |lab006|路由设置|
 |lab007|获取参数|
+|lab008|session|
