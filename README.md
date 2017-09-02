@@ -12,3 +12,4 @@ https://beego.me/docs/intro/upgrade.md
 |lab007|获取参数|
 |lab008|session|
 |lab009|过滤器|
+|lab010|静态文件处理|
