@@ -14,3 +14,4 @@ https://beego.me/docs/intro/upgrade.md
 |lab009|过滤器|
 |lab010|静态文件处理|
 |lab011|orm的使用|
+|lab012|重定向|

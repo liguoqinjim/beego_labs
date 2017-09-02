@@ -22,6 +22,8 @@ var FilterLogin = func(ctx *context.Context) {
 beego.InsertFilter("/user", beego.BeforeRouter, FilterLogin)
 ```
 
+`/*`是在所有的路径上都是用过滤器
+
 ##### 执行过程
 要是过滤器里面用到了session，必须在BeforeStatic之后才能获取，因为session没有在这之前初始化。
 其他值的含义见参考资料。
