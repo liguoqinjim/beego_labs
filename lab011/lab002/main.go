@@ -62,22 +62,38 @@ func main() {
 	o := orm.NewOrm()
 	o.Using("default") // 默认使用 default，你可以指定为其他数据库
 
-	profile := new(Profile)
-	profile.Age = 30
-
-	user := new(User)
-	user.Profile = profile
-	user.Name = "slene"
-
-	// 建表
-	err := orm.RunSyncdb("default", false, true)
-	if err != nil {
-		fmt.Println(err)
+	//查询user
+	user := User{Id: 2}
+	err := o.Read(&user)
+	if err == orm.ErrNoRows {
+		log.Println("没有查询到")
+	} else if err == orm.ErrMissPK {
+		log.Println("找不到主键")
+	} else {
+		log.Printf("user:[%d,%s]", user.Id, user.Name)
 	}
 
-	//插入
-	log.Println(o.Insert(profile))
-	log.Println(o.Insert(user))
+	//更新name
+	user.Name = "jim"
+	if num, err := o.Update(&user); err == nil {
+		log.Println("update:num=", num)
+	} else {
+		log.Println("update error:", err)
+	}
+
+	//查询默认是通过主键，但是也可以通过指定字段查询，这次通过name来查询
+	user2 := User{Name: "tom"}
+	log.Println("查询user2:", &user2)
+	err = o.Read(&user2, "name")
+	if err == orm.ErrNoRows {
+		log.Println("user2 没有查询到")
+	} else if err == orm.ErrMissPK {
+		log.Println("user2 找不到主键")
+	} else {
+		log.Printf("user2:[%d,%s]", user.Id, user.Name)
+	}
+
+	//删除不演示了，见文档
 }
 
 func readConf() *Conf {
