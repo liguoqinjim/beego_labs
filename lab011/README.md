@@ -2,4 +2,4 @@
 
 |实验|简介|
 |---|---|
-|quickstart01|运行example|
+|lab001|运行example|
