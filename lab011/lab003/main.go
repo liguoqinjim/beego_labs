@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego/orm"
+	_ "github.com/go-sql-driver/mysql"
 	"io/ioutil"
 	"log"
 )
@@ -20,7 +21,7 @@ var DBConf *Conf
 type Admin struct {
 	Id        int
 	Name      string
-	AdminInfo *AdminInfo `orm:"rel(one)"` // OneToOne relation
+	AdminInfo *AdminInfo `orm:"column(info2_id);rel(one)"` // OneToOne relation
 }
 
 type AdminInfo struct {
@@ -44,6 +45,8 @@ func init() {
 }
 
 func main() {
+	orm.Debug = true
+
 	o := orm.NewOrm()
 	o.Using("default") // 默认使用 default，你可以指定为其他数据库
 
@@ -63,6 +66,27 @@ func main() {
 	//插入
 	log.Println(o.Insert(adminInfo))
 	log.Println(o.Insert(admin))
+
+	//查询
+	admin2 := &Admin{Id: 2}
+	o.Read(admin2)
+	if admin2.AdminInfo != nil {
+		o.Read(admin2.AdminInfo)
+		log.Println("admin2=", admin2, admin2.AdminInfo)
+	}
+
+	//直接关联查询(这样查询会adminInfo的admin也会赋值，上面那种不会)
+	admin3 := &Admin{}
+	o.QueryTable("admin").Filter("Id", 3).RelatedSel().One(admin3)
+	log.Println("admin3=", admin3)
+	log.Println("admin3.AdminInfo=", admin3.AdminInfo.Admin)
+
+	//通过Admin方向查询AdminInfo(通过admin的id,再找到admin的info_id，再找到admin_info)
+	var adminInfo4 AdminInfo
+	err = o.QueryTable("admin_info").Filter("Admin__Id", 2).One(&adminInfo4)
+	if err == nil {
+		log.Println("adminInfo4=", adminInfo4)
+	}
 }
 
 func readConf() *Conf {
